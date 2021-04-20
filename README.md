@@ -3,9 +3,11 @@ A 3D-printable Doorlock which can attached at a standard door lock cylinder. Ope
 
 Aim of this project is to create a electronic doorlock for access control and logging on an sd card. It shall be used on the door of our makerspace. 
 
-The first version of this lock will rely on a wireconnection between outer and inner parts of the lock, hopefully later versions will communicate over radio. STL an CAD files can be found under main.
+The first version of this lock will rely on a wireconnection between outer and inner parts of the lock, hopefully later versions will communicate over radio. 
+STL an CAD files can be found under main.
 
-<img src="https://user-images.githubusercontent.com/77248262/115462890-7b3fbc00-a22b-11eb-9033-8d924fb0e1f9.jpg" alt="alt text" width="500" height="666,5">; 
+
+<img src="https://user-images.githubusercontent.com/77248262/115464666-b5aa5880-a22d-11eb-8e3c-b19e01390406.jpg" alt="alt text" width="500" height="666,5">
 
 
 ### List of materials (inside mechanics):
@@ -56,5 +58,7 @@ The first version of this lock will rely on a wireconnection between outer and i
   - Arduino Nano
   - radio component(NRF24L01)
    
+
+
 
 
