@@ -1,11 +1,11 @@
-# RFID-Doorlock
+## RFID-Doorlock
 A 3D-printable Doorlock which can attached at a standard door lock cylinder. Opens via RFID-Tag
 
 Aim of this project is to create a electronic doorlock for access control and logging on an sd card. It shall be used on the door of our makerspace. 
 
 The first version of this lock will rely on a wireconnection between outer and inner parts of the lock, hopefully later versions will communicate over radio. STL an CAD files can be found under main.
 
-List of materials (inside mechanics):
+#List of materials (inside mechanics):
 
 - 1x cylinder with key used in door
 - 2x bearing F6900 2RS / F 6900 2RS 10x22x6 mm
@@ -20,7 +20,7 @@ List of materials (inside mechanics):
 - 6x M4*10
 - 4x M3*20 countersunk head
 
-List of materials (inside electronics):
+#List of materials (inside electronics):
 
 - Arduino UNO
 - 1x power supply 12 V
@@ -35,7 +35,7 @@ List of materials (inside electronics):
   For wireless version:
   - radio component(NRF24L01)
 
-List of materials (outside electronics):
+#List of materials (outside electronics):
 
 - 4x M3*4
 - 4x M4*6
