@@ -1,5 +1,5 @@
 # RFID-Doorlock
-A 3D-printable Doorlock which can attached at a standard lockcylinder. Opens via RFID-Tag
+A 3D-printable Doorlock which can attached at a standard door lock cylinder. Opens via RFID-Tag
 
 Aim of this project is to create a electronic doorlock for access control and logging on an sd card. It shall be used on the door of our makerspace. 
 
