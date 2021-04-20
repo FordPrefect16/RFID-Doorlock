@@ -44,6 +44,9 @@ Printed in black PLA on a Ender 3
 - 1x Adafruit MicroSD Card Breakout Board (with SPI) + micro SD (for Access control + data logging)
 - 1x RTC Breakout Board Real Time Clock
 
+For wireless version:
+- radio component(NRF24L01)
+
 ### List of materials (outside electronics):
 
 - 4x M3*4
@@ -58,9 +61,9 @@ Printed in black PLA on a Ender 3
 - 1x PN532 NFC RFID Module
 - 1x Protobreadboard halfsized
   
-  For wireless version: 
-  - Arduino Nano
-  - radio component(NRF24L01)
+For wireless version: 
+- Arduino Nano
+- radio component(NRF24L01)
    
 ### Mechanism without hull
 
