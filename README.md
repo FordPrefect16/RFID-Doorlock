@@ -59,6 +59,6 @@ STL an CAD files can be found under main.
   - radio component(NRF24L01)
    
 
-
+<img src="https://user-images.githubusercontent.com/77248262/115464669-b6db8580-a22d-11eb-913c-e9444e7710ba.jpg" alt="alt text" width="500" height="990,5">
 
 
