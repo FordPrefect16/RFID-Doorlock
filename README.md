@@ -20,7 +20,6 @@ Printed in black PLA on a Ender 3
 ### List of materials (inside mechanics):
 
 - 1x cylinder with key used in door
-- 2x bearing F6900 2RS / F 6900 2RS 10x22x6 mm
 - 1x bearing 6808 2RS / 61808 2RS 40x52x7 mm
 - 1x timing belt GT2 288 mm 
 - 1x timing belt GT2 174 mm
@@ -32,7 +31,7 @@ Printed in black PLA on a Ender 3
 - 6x M4*10
 - 4x M3*20 countersunk head
 
-### List of materials (inside electronics):
+### List of materials (controller/electronics):
 
 - Arduino UNO <br>
 - 1x power supply 12 V
@@ -47,7 +46,7 @@ Printed in black PLA on a Ender 3
 For wireless version:
 - radio component(NRF24L01)
 
-### List of materials (outside electronics):
+### List of materials (door terminal):
 
 - 4x M3*4
 - 4x M4*6
