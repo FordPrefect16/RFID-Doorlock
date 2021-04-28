@@ -46,7 +46,7 @@ int sensorValue = 0;
     const int dirPin = 8;    //steppercontrol-direction
     const int enablePin = 2;    //steppercontrol-enable
     int stepCounter;
-    const int steps = 1000;
+    const int steps = 1500;
 
 
     //buttons
@@ -127,7 +127,10 @@ while (nfc.tagPresent()) {                                //scanning for NFC-Tag
                   digitalWrite(stepPin,HIGH); 
                   delayMicroseconds(500); 
                   digitalWrite(stepPin,LOW); 
-                  delayMicroseconds(500); 
+                  delayMicroseconds(500);
+                  if(analogRead(statusPin)<290){
+                   break;
+                  }
                 }
                delay(5000);
                digitalWrite(dirPin,HIGH);                //changes direction after 5 seconds to close latch
@@ -136,6 +139,7 @@ while (nfc.tagPresent()) {                                //scanning for NFC-Tag
                   delayMicroseconds(500); 
                   digitalWrite(stepPin,LOW); 
                   delayMicroseconds(500); 
+                  
                   
                  }
                digitalWrite(enablePin, HIGH);               //disable stepper
@@ -183,7 +187,9 @@ while (nfc.tagPresent()) {                                //scanning for NFC-Tag
                delayMicroseconds(500); 
                digitalWrite(stepPin,LOW); 
                delayMicroseconds(500); 
-               
+               if(analogRead(statusPin)>1000){
+                 break;
+               }
              }
           digitalWrite(enablePin, HIGH);                 //disable stepper
           file.open("Log.csv", FILE_WRITE);              //open Logging-File
@@ -231,8 +237,8 @@ while (nfc.tagPresent()) {                                //scanning for NFC-Tag
   }
   
 sensorValue = analogRead(statusPin);                           //watching lockstate
-//Serial.print("Lockstatus: ");
-//Serial.println(sensorValue);
+Serial.print("Lockstatus: ");
+Serial.println(sensorValue);
 delay(10);
 if(sensorValue <= 840){                                 //turn on green LED/turn off red LED when lock open
    digitalWrite(RedLEDPin, LOW);
