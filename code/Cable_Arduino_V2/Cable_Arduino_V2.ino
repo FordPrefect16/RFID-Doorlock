@@ -18,7 +18,6 @@ NfcAdapter nfc = NfcAdapter(pn532_i2c);
 #include "SdFat.h"
 #define SD_FAT_TYPE 0 //SD format = Fat32
 const uint8_t SD_CS_PIN = 10;
-// Try to select the best SD card configuration.
 #define SD_CONFIG SdSpiConfig(SD_CS_PIN, DEDICATED_SPI)
 SdFat sd;
 File file;
@@ -42,30 +41,41 @@ int sensorValue = 0;
 
 //pins
 
-const int stepPin = 9; 
-const int dirPin = 8; 
+    //stepper
+    const int stepPin = 9;   //steppercontrol-step
+    const int dirPin = 8;    //steppercontrol-direction
+    const int enablePin = 2;    //steppercontrol-enable
 
+    //buttons
+    const int RedButtonPin = 4; 
+    const int GreenButtonPin = 3; 
+    const int RedLEDPin = 7; 
+    const int GreenLEDPin = 6;
+
+    //buzzer
+    const int buzzPin = A3;
+
+    //lockstatus input
+    const int statusPin = A1;
 
 void setup() {
 
 
-pinMode(2, OUTPUT);      //steppercontrol-Enable
-pinMode(3, INPUT);  
-pinMode(4, INPUT);       //red-button
-pinMode(5, INPUT);       //green-button
-pinMode(6, OUTPUT);      //green-led
-pinMode(7, OUTPUT);      //red-led
-pinMode(10, OUTPUT);     //SD-CS
-pinMode(stepPin,OUTPUT); //steppercontrol-step
-pinMode(dirPin,OUTPUT);  //steppercontrol-direction
-pinMode(A0, OUTPUT);     //buzzer
-pinMode(A1, INPUT);      //lockstatus-potentiometer
-pinMode(A3, OUTPUT);     //buzzing
-pinMode(A4, INPUT);      //NFC-Reader-Input SDA
-pinMode(A5, INPUT);      //NFC-Reader-Input SCL
+pinMode(enablePin, OUTPUT);         //steppercontrol-enable 
+pinMode(RedButtonPin, INPUT);       //red-button
+pinMode(GreenButtonPin, INPUT);     //green-button
+pinMode(GreenLEDPin, OUTPUT);       //green-led
+pinMode(RedLEDPin, OUTPUT);         //red-led
+pinMode(SD_CS_PIN, OUTPUT);         //SD-CS
+pinMode(stepPin,OUTPUT);            //steppercontrol-step
+pinMode(dirPin,OUTPUT);             //steppercontrol-direction
+pinMode(statusPin, INPUT);          //lockstatus-potentiometer
+pinMode(buzzPin, OUTPUT);           //buzzing
+pinMode(A4, INPUT);                 //NFC-Reader-Input SDA
+pinMode(A5, INPUT);                 //NFC-Reader-Input SCL
 digitalWrite(stepPin, LOW);
 digitalWrite(dirPin, LOW);
-digitalWrite(2, HIGH);   //disable Stepper
+digitalWrite(enablePin, HIGH);      //disable Stepper
 
 if (! rtc.begin()) {                                      //begin Real Time Clock script
     abort();
@@ -82,7 +92,6 @@ nfc.begin();
 
 void loop() {
  
-Serial.print(digitalRead(3));
 
 while (nfc.tagPresent()) {                                //scanning for NFC-Tag
   NfcTag tag = nfc.read();   
@@ -98,17 +107,17 @@ while (nfc.tagPresent()) {                                //scanning for NFC-Tag
       if (strcmp(line, UID2)==0){
         file.close();                                     //closing file, & directory
         Serial.println("Access granted");
-        digitalWrite(A3, HIGH);                           //short beeping
+        digitalWrite(buzzPin, HIGH);                           //short beeping
         delay(10);
-        digitalWrite(A3, LOW);
+        digitalWrite(buzzPin, LOW);
         delay(5);
         prevTime = millis();                              //starting timer 
         while ((millis() - prevTime <= interval)){
           Serial.println("Waiting for button input...");
-          if(digitalRead(3) == HIGH) {                    //green button pressed
+          if(digitalRead(GreenButtonPin) == HIGH) {                    //green button pressed
               Serial.println("Open lock..."); 
               delay(10);
-              digitalWrite(2,LOW);                        //enable stepper
+              digitalWrite(enablePin,LOW);                //enable stepper
               digitalWrite(dirPin,LOW);                   //stepper moves in opening diriction
                 for(int x = 0; x < 900; x++) {
                   digitalWrite(stepPin,HIGH); 
@@ -125,7 +134,7 @@ while (nfc.tagPresent()) {                                //scanning for NFC-Tag
                   delayMicroseconds(2000); 
                   
                  }
-               digitalWrite(2, HIGH);                    //disable stepper
+               digitalWrite(enablePin, HIGH);               //disable stepper
                file.open("Log.csv", FILE_WRITE);         //opening Logging-File
                DateTime now = rtc.now();                 //reading date from RTC, optimize layout and print to Log.csv
                if(now.day()<10){
@@ -161,10 +170,10 @@ while (nfc.tagPresent()) {                                //scanning for NFC-Tag
                delay(5);
                break;                                    //exit timer loop
          }
-          if(digitalRead(4) == HIGH) {                   //red button pressed
+          if(digitalRead(RedButtonPin) == HIGH) {                   //red button pressed
              Serial.println("Closing lock...");
              digitalWrite(dirPin,HIGH);                  //changes the rotation direction zo closing
-             digitalWrite(2,LOW);                        //enables stepper
+             digitalWrite(enablePin,LOW);                //enables stepper
               for(int x = 0; x < 900; x++) {
                digitalWrite(stepPin,HIGH); 
                delayMicroseconds(2000); 
@@ -172,7 +181,7 @@ while (nfc.tagPresent()) {                                //scanning for NFC-Tag
                delayMicroseconds(2000); 
                
              }
-          digitalWrite(2, HIGH);                         //disable stepper
+          digitalWrite(enablePin, HIGH);                 //disable stepper
           file.open("Log.csv", FILE_WRITE);              //open Logging-File
           DateTime now = rtc.now();                      //reading date from RTC, optimize layout and print to Log.csv
           if(now.day()<10){
@@ -217,17 +226,17 @@ while (nfc.tagPresent()) {                                //scanning for NFC-Tag
     }
   }
   
-sensorValue = analogRead(A1);                           //watching lockstate
+sensorValue = analogRead(statusPin);                           //watching lockstate
 Serial.print("Lockstatus: ");
 Serial.println(sensorValue);
 delay(10);
 if(sensorValue <= 840){                                 //turn on green LED/turn off red LED when lock open
-   digitalWrite(6, LOW);
-   digitalWrite(7, HIGH);
+   digitalWrite(RedLEDPin, LOW);
+   digitalWrite(GreenLEDPin, HIGH);
 }
 if(sensorValue > 840){                                 //turn on red LED/turn off green LED when lock closed
-   digitalWrite(6, HIGH);
-   digitalWrite(7, LOW);
+   digitalWrite(RedLEDPin, HIGH);
+   digitalWrite(GreenLEDPin, LOW);
    }
 
 }
