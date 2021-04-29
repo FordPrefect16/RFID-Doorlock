@@ -10,7 +10,7 @@ STL an CAD files can be found under main.
 
 The mechanism at the inside of the door is shoved over the key and can be secured with two screws at the fittings and two additional screws. Also the cylinder is secured with a press fitting. When a RFID Tag is registered at the door terminal, the tag will be compared to the entitled codes on a csv-file on sd. When access is granted, the buttons (which indicate the lockstate via LED - open or closed) can be pressed. The green one opens the lock, the red one closes it. Tag, time, date and action will be logged on a csv-file. The lockstate is retrieved through a 10 turn potentiometer, to secure right Information, even if lockstate is changed to mechanical action. The lock can be manualy overridden from inside by turning the wheel or from outside with the right key for the cylinder. 
  
-<img src="https://user-images.githubusercontent.com/77248262/116557313-9df26480-a8fe-11eb-891b-a074f36f2be4.jpg" alt="alt text" width="500" height="666,5">
+<img src="https://user-images.githubusercontent.com/77248262/116558230-810a6100-a8ff-11eb-8095-321dfca60ed1.jpg" alt="alt text" width="666,5" height="500">
 
 # Materials used
 
