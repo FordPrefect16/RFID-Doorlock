@@ -69,6 +69,10 @@ For wireless version:
    
 ### Mechanism without hull
 
-<img src="https://user-images.githubusercontent.com/77248262/116557274-959a2980-a8fe-11eb-877d-3f9a6d0d97fa.jpg" alt="alt text" width="500" height="990,5">
+<img src="https://user-images.githubusercontent.com/77248262/116597338-ccd00100-a925-11eb-8774-cfe8752348b6.jpg" alt="alt text" width="500" height="990,5">
 
+### Circuit
+<img src="https://user-images.githubusercontent.com/77248262/116596824-28e65580-a925-11eb-9725-33828d18108b.PNG" alt="alt text" width="1000" height="377.93">
+
+<img src="https://user-images.githubusercontent.com/77248262/116599143-fd189f00-a927-11eb-9dd6-8af000d37759.jpg" alt="alt text" width="666,5" height="500">
 
