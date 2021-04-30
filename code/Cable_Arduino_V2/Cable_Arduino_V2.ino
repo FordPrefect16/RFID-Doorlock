@@ -131,7 +131,16 @@ while (nfc.tagPresent()) {                                //scanning for NFC-Tag
                   if(analogRead(statusPin)<290){
                    break;
                   }
-                }
+               }   
+               if(analogRead(statusPin) <= 840){         //turn on green LED/turn off red LED when lock open
+                 digitalWrite(RedLEDPin, LOW);
+                 digitalWrite(GreenLEDPin, HIGH);
+               }
+               if(analogRead(statusPin) > 840){          //turn on red LED/turn off green LED when lock closed
+                 digitalWrite(RedLEDPin, HIGH);
+                 digitalWrite(GreenLEDPin, LOW);
+               }
+                
                delay(5000);
                digitalWrite(dirPin,HIGH);                //changes direction after 5 seconds to close latch
                  for(int x = 0; x < 100; x++) {
@@ -247,6 +256,6 @@ if(analogRead(statusPin) <= 840){                                 //turn on gree
 if(analogRead(statusPin) > 840){                                 //turn on red LED/turn off green LED when lock closed
    digitalWrite(RedLEDPin, HIGH);
    digitalWrite(GreenLEDPin, LOW);
-   }
+}
 
 }
