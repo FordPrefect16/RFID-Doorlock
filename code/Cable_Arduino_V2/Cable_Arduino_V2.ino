@@ -32,8 +32,8 @@ String UID;
 
 //Setup Feedback loop
 
-long interval = 20000;       //change to wanted waiting time for pressing button
-long prevTime = 1000;
+unsigned long interval = 20000;       //change to wanted waiting time for pressing button
+unsigned long prevTime = 1000;
 
 //variables for lockstatus
 
@@ -116,7 +116,7 @@ while (nfc.tagPresent()) {                                //scanning for NFC-Tag
         digitalWrite(buzzPin, LOW);
         delay(5);
         prevTime = millis();                              //starting timer 
-        while ((millis() - prevTime <= interval)){
+        while ((millis() - prevTime <= interval) <= 0){
           Serial.println("Waiting for button input...");
           if(digitalRead(GreenButtonPin) == HIGH) {                    //green button pressed
               Serial.println("Open lock..."); 
@@ -236,15 +236,15 @@ while (nfc.tagPresent()) {                                //scanning for NFC-Tag
     }
   }
   
-sensorValue = analogRead(statusPin);                           //watching lockstate
-Serial.print("Lockstatus: ");
-Serial.println(sensorValue);
+//sensorValue = analogRead(statusPin);                           //watching lockstate
+//Serial.print("Lockstatus: ");
+//Serial.println(sensorValue);
 delay(10);
-if(sensorValue <= 840){                                 //turn on green LED/turn off red LED when lock open
+if(analogRead(statusPin) <= 840){                                 //turn on green LED/turn off red LED when lock open
    digitalWrite(RedLEDPin, LOW);
    digitalWrite(GreenLEDPin, HIGH);
 }
-if(sensorValue > 840){                                 //turn on red LED/turn off green LED when lock closed
+if(analogRead(statusPin) > 840){                                 //turn on red LED/turn off green LED when lock closed
    digitalWrite(RedLEDPin, HIGH);
    digitalWrite(GreenLEDPin, LOW);
    }
