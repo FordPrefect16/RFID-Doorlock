@@ -30,10 +30,10 @@ char line[21];
 char UID2 [21];
 String UID;
 
-//Setup Feedback loop
+//Setup loop
 
-unsigned long interval = 20000;       //change to wanted waiting time for pressing button
-unsigned long prevTime = 1000;
+long interval = 20000;       //change to wanted waiting time for pressing button
+long prevTime = 1000;
 
 //variables for lockstatus
 
@@ -85,7 +85,18 @@ if (! rtc.begin()) {                                      //begin Real Time Cloc
     abort();
   }
              
-rtc.adjust(DateTime(F(__DATE__), F(__TIME__)));           //adjust time & date to computer time & date after initialisation or powerloss
+//rtc.adjust(DateTime(F(__DATE__), F(__TIME__)));           //adjust time & date to computer time & date after initialisation or powerloss
+
+if (rtc.lostPower()) {
+    Serial.println("No Time set!");
+    rtc.adjust(DateTime(F(__DATE__), F(__TIME__)));          //adjust time & date to computer time & date after initialisation or powerloss
+    for(int x = 0; x < 900; x++) {
+                  digitalWrite(buzzPin,HIGH); 
+                  delay(100); 
+                  digitalWrite(buzzPin,LOW); 
+                  delay(500); 
+                }
+}
 
 Serial.begin(9600);
 Serial.println("NDEF Reader");
@@ -116,7 +127,7 @@ while (nfc.tagPresent()) {                                //scanning for NFC-Tag
         digitalWrite(buzzPin, LOW);
         delay(5);
         prevTime = millis();                              //starting timer 
-        while ((millis() - prevTime <= interval) <= 0){
+        while (millis() - prevTime <= interval){
           Serial.println("Waiting for button input...");
           if(digitalRead(GreenButtonPin) == HIGH) {                    //green button pressed
               Serial.println("Open lock..."); 
@@ -128,15 +139,15 @@ while (nfc.tagPresent()) {                                //scanning for NFC-Tag
                   delayMicroseconds(500); 
                   digitalWrite(stepPin,LOW); 
                   delayMicroseconds(500);
-                  if(analogRead(statusPin)<290){
+                  if(analogRead(statusPin)>1000){
                    break;
                   }
                }   
-               if(analogRead(statusPin) <= 840){         //turn on green LED/turn off red LED when lock open
+               if(analogRead(statusPin) > 840){         //turn on green LED/turn off red LED when lock open
                  digitalWrite(RedLEDPin, LOW);
                  digitalWrite(GreenLEDPin, HIGH);
                }
-               if(analogRead(statusPin) > 840){          //turn on red LED/turn off green LED when lock closed
+               if(analogRead(statusPin) <= 840){          //turn on red LED/turn off green LED when lock closed
                  digitalWrite(RedLEDPin, HIGH);
                  digitalWrite(GreenLEDPin, LOW);
                }
@@ -145,9 +156,9 @@ while (nfc.tagPresent()) {                                //scanning for NFC-Tag
                digitalWrite(dirPin,HIGH);                //changes direction after 5 seconds to close latch
                  for(int x = 0; x < 100; x++) {
                   digitalWrite(stepPin,HIGH); 
-                  delayMicroseconds(500); 
+                  delayMicroseconds(1000); 
                   digitalWrite(stepPin,LOW); 
-                  delayMicroseconds(500); 
+                  delayMicroseconds(1000); 
                   
                   
                  }
@@ -193,10 +204,10 @@ while (nfc.tagPresent()) {                                //scanning for NFC-Tag
              digitalWrite(enablePin,LOW);                //enables stepper
               for(int x = 0; x < 900; x++) {
                digitalWrite(stepPin,HIGH); 
-               delayMicroseconds(500); 
+               delayMicroseconds(1000); 
                digitalWrite(stepPin,LOW); 
-               delayMicroseconds(500); 
-               if(analogRead(statusPin)>1000){
+               delayMicroseconds(1000); 
+               if(analogRead(statusPin)<290){
                  break;
                }
              }
@@ -245,15 +256,16 @@ while (nfc.tagPresent()) {                                //scanning for NFC-Tag
     }
   }
   
-//sensorValue = analogRead(statusPin);                           //watching lockstate
-//Serial.print("Lockstatus: ");
-//Serial.println(sensorValue);
+
+sensorValue = analogRead(statusPin);                           //watching lockstate
+Serial.print("Lockstatus: ");
+Serial.println(sensorValue);
 delay(10);
-if(analogRead(statusPin) <= 840){                                 //turn on green LED/turn off red LED when lock open
+if(analogRead(statusPin) > 840){                                 //turn on green LED/turn off red LED when lock open
    digitalWrite(RedLEDPin, LOW);
    digitalWrite(GreenLEDPin, HIGH);
 }
-if(analogRead(statusPin) > 840){                                 //turn on red LED/turn off green LED when lock closed
+if(analogRead(statusPin) <= 840){                                 //turn on red LED/turn off green LED when lock closed
    digitalWrite(RedLEDPin, HIGH);
    digitalWrite(GreenLEDPin, LOW);
 }

@@ -71,8 +71,10 @@ if (! rtc.begin()) {                                      //begin Real Time Cloc
     abort();
   }
              
-rtc.adjust(DateTime(F(__DATE__), F(__TIME__)));           //adjust time & date to computer time & date after initialisation or powerloss
-
+if (rtc.lostPower()) {
+    Serial.println("No Time set!");
+    rtc.adjust(DateTime(F(__DATE__), F(__TIME__)));          //adjust time & date to computer time & date after initialisation or powerloss
+}
 Serial.begin(9600);
 Serial.println("NDEF Reader");
 nfc.begin();
