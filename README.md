@@ -1,7 +1,7 @@
 # RFID-Doorlock
 A 3D-printable Doorlock which can attached to a standard door lock cylinder. Opens via RFID-Tag
 
-Aim of this project is to create a electronic doorlock for access control and logging on an sd card. It shall be used on the door of our makerspace. 
+Aim of this project is to create a electronic doorlock for access control and logging on an sd card. It shall be used on the door of the makerspace at our University. 
 
 The first version of this lock will rely on a wireconnection between outer and inner parts of the lock, hopefully later versions will communicate over radio. 
 STL an CAD files can be found under main.
@@ -24,7 +24,7 @@ Printed in black PLA on a Ender 3
 - 1x bearing 6808 2RS / 61808 2RS 40x52x7 mm
 - 1x timing belt GT2 288 mm 
 - 1x timing belt GT2 174 mm
-- 1x Nema 17 steppermotor 42x20 mm 16 Ncm
+- 1x Nema 17 stepper motor 42x20 mm, 16 Ncm, 1 A, biopolar
 - 1x 10K Potentiometer 10 Turn
 - 5x M3*20
 - 4x M3*16
@@ -37,14 +37,14 @@ Printed in black PLA on a Ender 3
 <img src="https://user-images.githubusercontent.com/77248262/116557772-10634480-a8ff-11eb-945b-16bd9bc5ab34.jpg" alt="alt text" width="500" height="666,5">
 
 - Arduino UNO <br>
-- 1x power supply 9-12 V
+- 1x power supply 9-12 V (for this setup 9 V are recomended so the A4988 driver can supply the stepper with 1 A without overheating)
 - 1x jack connector for breadboard
 - 1x Protobreadboard halfsized
 - Dupont-connectors
 - 1x 100 uF electrolyte capacitor
-- 1x stepper driver (e. g. A4988)
+- 1x stepper driver (e. g. A4988) (don't forget to adjust current output for Stepper)
 - 1x Adafruit MicroSD Card Breakout Board (with SPI) + micro SD (for Access control + data logging)
-- 1x RTC Breakout Board Real Time Clock
+- 1x RTC Breakout Board - Real Time Clock
 
 For wireless version:
 - radio component(NRF24L01)
@@ -60,7 +60,7 @@ For wireless version:
 - 1x 100 uF electrolyte capacitor
 - 1x button / led red, 5 V, 10 mm
 - 1x button / led green, 5 V, 10 mm
-- 1x PN532 NFC RFID Module
+- 1x PN532 NFC RFID Module Elchouse (in this setup I2C is used, don! forget to setup the switches on this breakout board)
 - 1x Protobreadboard halfsized
   
 For wireless version: 

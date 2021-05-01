@@ -46,7 +46,7 @@ int sensorValue = 0;
     const int dirPin = 8;    //steppercontrol-direction
     const int enablePin = 2;    //steppercontrol-enable
     int stepCounter;
-    const int steps = 1500;
+    const int steps = 1500;     //maximum of steps, that should be done
 
 
     //buttons
